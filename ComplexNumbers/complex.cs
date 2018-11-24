@@ -57,6 +57,12 @@ namespace ComplexNumbers
             return _mod;
         }
 
+        public static String WriteComplex(Complex x)
+        {
+            String result = x.R.ToString() + '+' + x.I.ToString() + 'i';
+            return result;
+        }
+
 
     }
 
@@ -74,7 +80,6 @@ namespace ComplexNumbers
             Complex[] add = new Complex[W.vector.Length];
             for(int i=0; i<W.vector.Length; i++)
             {
-               // add[i] = new Complex(W.vector[i].R + V.vector[i].R, W.vector[i].I + V.vector[i].I);
                 add[i] = W.vector[i] + V.vector[i];
             }
 

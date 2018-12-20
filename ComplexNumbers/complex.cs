@@ -8,115 +8,130 @@ namespace ComplexNumbers
 {
     class Complex
     {
-        public int R { get; set; }
-        public int I { get; set; }
+        public double Real;
+        public double Imaginary;
 
-        public Complex(int _R, int _I)
+        public Complex(double real, double imaginary)
         {
-            R = _R;
-            I = _I;
+            this.Real = real;
+            this.Imaginary = imaginary;
         }
 
-        public static Complex operator +(Complex num1, Complex num2)
+        public Complex(Complex c)
         {
-            return new Complex(num1.R + num2.R, num2.I + num2.I);
+            this.Real = c.Real;
+            this.Imaginary = c.Imaginary;
         }
 
-        public static Complex operator -(Complex num1, Complex num2)
+        public Complex(double real)
         {
-            return new Complex(num1.R - num2.R, num2.I - num2.I);
+            this.Real = real;
+            this.Imaginary = 0;
         }
 
-        public static Complex operator *(Complex num1, Complex num2)
+        public static readonly Complex I = new Complex(0, 1);
+        public static readonly Complex Zero = new Complex(0, 0);
+        public static readonly Complex One = new Complex(1, 0);
+
+        public static Complex operator -(Complex c)
         {
-            return new Complex(
-            num1.R * num2.R - num1.I * num2.I,
-            num1.R * num2.I + num1.I * num2.R);
+            return new Complex(-c.Real, -c.Imaginary);
         }
 
-        public static Complex operator /(Complex num1, Complex num2)
+        public static Complex operator +(Complex c1, Complex c2)
         {
-            Complex con = new Complex(num1.R, -num2.I);
-            num2 *= con;
-
-            Complex numerator = num1 * con;
-
-            return new Complex(
-                numerator.R / num2.R,
-                numerator.I / num2.R);
+            return new Complex(c1.Real + c2.Real, c1.Imaginary + c2.Imaginary);
         }
 
-        public static Complex con(Complex num1)
+        public static Complex operator -(Complex c1, Complex c2)
         {
-            return new Complex(num1.R, -num1.I);
+            return new Complex(c1.Real - c2.Real, c1.Imaginary - c2.Imaginary);
         }
 
-        public static double mod(Complex num1)
+        public static implicit operator Complex(double real)
         {
-            double _mod = Math.Sqrt(Math.Pow(num1.R, 2) + Math.Pow(num1.I, 2));
-            return _mod;
+            return new Complex(real);
         }
 
-        public static String WriteComplex(Complex x)
+        public static Complex operator *(Complex c1, Complex c2)
         {
-            String result = x.R.ToString() + '+' + x.I.ToString() + 'i';
-            return result;
+            return new Complex(c1.Real * c2.Real - c1.Imaginary * c2.Imaginary, c1.Real * c2.Imaginary + c1.Imaginary * c2.Real);
         }
 
-
-    }
-
-    class ComplexV
-    {
-        public Complex[] vector;
-
-        private ComplexV(Complex[] W)
+        public static Complex operator /(Complex c, double divisor)
         {
-            this.vector = W;
+            return new Complex(c.Real / divisor, c.Imaginary / divisor);
         }
 
-        public static Complex[] AddVectors (ComplexV W, ComplexV V)
+        public static Complex operator /(Complex c1, Complex c2)
         {
-            Complex[] add = new Complex[W.vector.Length];
-            for(int i=0; i<W.vector.Length; i++)
+            return c1 * c2.Conjugate() / (c2.Real * c2.Real + c2.Imaginary * c2.Imaginary);
+        }
+
+        public double Abs()
+        {
+            return Math.Sqrt(Math.Pow(Real, 2) + Math.Pow(Imaginary, 2));
+        }
+
+        public Complex Conjugate()
+        {
+            return new Complex(Real, -Imaginary);
+        }
+
+        /// <summary>
+        /// Create complex from Euler's formula.
+        /// </summary>
+        /// <param name="radians">Radians in radians</param>
+        /// <returns>cos(x) + i*sin(x)</returns>
+        public static Complex Exp(double radians)
+        {
+            return new Complex(Math.Cos(radians), Math.Sin(radians));
+        }
+
+        public static bool operator ==(Complex c1, Complex c2)
+        {
+            return c1.Equals(c2);
+        }
+
+        public static bool operator !=(Complex c1, Complex c2)
+        {
+            return !c1.Equals(c2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            Complex c = (Complex)obj;
+            return c.Real == Real && c.Imaginary == Imaginary;
+        }
+
+        // Override the ToString() method to display a complex number 
+        // in the traditional format:
+        public override string ToString()
+        {
+            string temp = "";
+            if (Real != 0)
             {
-                add[i] = W.vector[i] + V.vector[i];
+                temp += string.Format("{0}", Real);
             }
-
-            return add;
-        }
-
-        public static Complex[] SubVectors(ComplexV W, ComplexV V)
-        {
-            Complex[] sub = new Complex[W.vector.Length];
-            for (int i = 0; i < W.vector.Length; i++)
+            if (Imaginary != 0)
             {
-                sub[i] = W.vector[i] - V.vector[i];
+                if (Imaginary < 0)
+                {
+                    temp += string.Format("-{0}i", -Imaginary);
+                }
+                else
+                {
+                    if (temp != "")
+                    {
+                        temp += string.Format("+{0}i", Imaginary);
+                    }
+                    else
+                    {
+                        temp += string.Format("{0}i", Imaginary);
+                    }
+                }
             }
-
-            return sub;
-        }
-
-        public static Complex[] Multip(ComplexV W, int a)
-        {
-            Complex[] multip = new Complex[W.vector.Length];
-            for (int i = 0; i < W.vector.Length; i++)
-            {
-                multip[i] = new Complex(W.vector[i].R * a, W.vector[i].I * a);
-            }
-
-            return multip;
-        }
-
-        public static Complex[] conV(ComplexV W, ComplexV V)
-        {
-            Complex[] multip = new Complex[W.vector.Length];
-            for (int i = 0; i < W.vector.Length; i++)
-            {
-                multip[i] = W.vector[i] * Complex.con(V.vector[i]);
-            }
-
-            return multip;
+            return temp;
         }
     }
 }

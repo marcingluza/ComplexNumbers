@@ -1,91 +1,72 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ComplexNumbers
 {
     class Complex
     {
-        public double Real;
-        public double Imaginary;
+        public double R;
+        public double Im;
 
-        public Complex(double real, double imaginary)
+        public Complex(double real, double imaginary) //konstruktor dla 2x double
         {
-            this.Real = real;
-            this.Imaginary = imaginary;
+            this.R = real;
+            this.Im = imaginary;
         }
 
-        public Complex(Complex c)
+        public Complex(Complex c)  //konstruktor dla zesp
         {
-            this.Real = c.Real;
-            this.Imaginary = c.Imaginary;
+            this.R = c.R;
+            this.Im = c.Im;
         }
 
-        public Complex(double real)
+        public Complex(double real)  //konstruktor dla real
         {
-            this.Real = real;
-            this.Imaginary = 0;
+            this.R = real;
+            this.Im = 0;
         }
 
         public static readonly Complex I = new Complex(0, 1);
         public static readonly Complex Zero = new Complex(0, 0);
         public static readonly Complex One = new Complex(1, 0);
 
-        public static Complex operator -(Complex c)
+        public static Complex operator -(Complex c)  //negacja
         {
-            return new Complex(-c.Real, -c.Imaginary);
+            return new Complex(-c.R, -c.Im);
         }
 
-        public static Complex operator +(Complex c1, Complex c2)
+        public static Complex operator +(Complex c1, Complex c2) //dodawanie
         {
-            return new Complex(c1.Real + c2.Real, c1.Imaginary + c2.Imaginary);
+            return new Complex(c1.R + c2.R, c1.Im + c2.Im);
         }
 
-        public static Complex operator -(Complex c1, Complex c2)
+        public static Complex operator -(Complex c1, Complex c2) //odejmowanie
         {
-            return new Complex(c1.Real - c2.Real, c1.Imaginary - c2.Imaginary);
+            return new Complex(c1.R - c2.R, c1.Im - c2.Im);
         }
 
-        public static implicit operator Complex(double real)
+        public static Complex operator *(Complex c1, Complex c2) //mnozenie
         {
-            return new Complex(real);
+            return new Complex(c1.R * c2.R - c1.Im * c2.Im, c1.R * c2.Im + c1.Im * c2.R);
         }
 
-        public static Complex operator *(Complex c1, Complex c2)
+        public static Complex operator /(Complex c, double n) //dzielenie przez n
         {
-            return new Complex(c1.Real * c2.Real - c1.Imaginary * c2.Imaginary, c1.Real * c2.Imaginary + c1.Imaginary * c2.Real);
+            return new Complex(c.R / n, c.Im / n);
         }
 
-        public static Complex operator /(Complex c, double divisor)
+        public static Complex operator /(Complex c1, Complex c2) // dzielenie
         {
-            return new Complex(c.Real / divisor, c.Imaginary / divisor);
+            return c1 * c2.Conjugate() / (c2.R * c2.R + c2.Im * c2.Im);
         }
 
-        public static Complex operator /(Complex c1, Complex c2)
+        public double Abs() //wartosc bezwzgledna
         {
-            return c1 * c2.Conjugate() / (c2.Real * c2.Real + c2.Imaginary * c2.Imaginary);
+            return Math.Sqrt(Math.Pow(R, 2) + Math.Pow(Im, 2));
         }
 
-        public double Abs()
+        public Complex Conjugate() //sprezenie zespolone
         {
-            return Math.Sqrt(Math.Pow(Real, 2) + Math.Pow(Imaginary, 2));
-        }
-
-        public Complex Conjugate()
-        {
-            return new Complex(Real, -Imaginary);
-        }
-
-        /// <summary>
-        /// Create complex from Euler's formula.
-        /// </summary>
-        /// <param name="radians">Radians in radians</param>
-        /// <returns>cos(x) + i*sin(x)</returns>
-        public static Complex Exp(double radians)
-        {
-            return new Complex(Math.Cos(radians), Math.Sin(radians));
+            return new Complex(R, -Im);
         }
 
         public static bool operator ==(Complex c1, Complex c2)
@@ -101,33 +82,31 @@ namespace ComplexNumbers
         public override bool Equals(object obj)
         {
             Complex c = (Complex)obj;
-            return c.Real == Real && c.Imaginary == Imaginary;
+            return c.R == R && c.Im == Im;
         }
 
-        // Override the ToString() method to display a complex number 
-        // in the traditional format:
         public override string ToString()
         {
             string temp = "";
-            if (Real != 0)
+            if (R != 0)
             {
-                temp += string.Format("{0}", Real);
+                temp += string.Format("{0}", R);
             }
-            if (Imaginary != 0)
+            if (Im != 0)
             {
-                if (Imaginary < 0)
+                if (Im < 0)
                 {
-                    temp += string.Format("-{0}i", -Imaginary);
+                    temp += string.Format("-{0}i", -Im);
                 }
                 else
                 {
                     if (temp != "")
                     {
-                        temp += string.Format("+{0}i", Imaginary);
+                        temp += string.Format("+{0}i", Im);
                     }
                     else
                     {
-                        temp += string.Format("{0}i", Imaginary);
+                        temp += string.Format("{0}i", Im);
                     }
                 }
             }

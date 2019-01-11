@@ -49,6 +49,11 @@ namespace AlgorytmyKwantowe
             return new Zespolona(c1.Re * c2.Re - c1.Im * c2.Im, c1.Re * c2.Im + c1.Im * c2.Re);
         }
 
+        public static Zespolona operator *(Zespolona c1, int n) //mnozenie n
+        {
+            return new Zespolona(c1.Re * n, c1.Im * n);
+        }
+
         public static Zespolona operator /(Zespolona c, double n) //dzielenie przez n
         {
             return new Zespolona(c.Re / n, c.Im / n);

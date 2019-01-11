@@ -1,9 +1,4 @@
 ﻿using AlgorytmyKwantowe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlgorytmyKwantowe
 { }
@@ -39,7 +34,7 @@ namespace AlgorytmyKwantowe
         return new ZespolonyWektor(odd);
     }
 
-    public static Zespolona IloczynSkalarny (ZespolonyWektor c1, ZespolonyWektor c2) //skalar
+    public static Zespolona IloczynSkalarny (ZespolonyWektor c1, ZespolonyWektor c2) //iloczyn
     {
         Zespolona temp = new Zespolona(0);
         for (int i = 0; i < c1.ComplexVector.Length; i++)
@@ -48,6 +43,17 @@ namespace AlgorytmyKwantowe
         }
 
         return temp;
+    }
+
+    public static ZespolonyWektor Skalar(ZespolonyWektor c1, int skalar) //skalar
+    {
+        Zespolona[] skal = new Zespolona[c1.ComplexVector.Length];
+        for (int i = 0; i < c1.ComplexVector.Length; i++)
+        {
+            skal[i] = c1.ComplexVector[i] * skalar;
+        }
+
+        return new ZespolonyWektor(skal);
     }
 
 

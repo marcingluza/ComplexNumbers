@@ -50,6 +50,13 @@ namespace AlgorytmyKwantowe
             Zespolona testZ = ZespolonyWektor.IloczynSkalarny(v1, v2);
             Console.WriteLine(testZ.ToString());
 
+            Console.WriteLine("Skalar v1 * 2: ");
+            testV = ZespolonyWektor.Skalar(v1, 2);
+            Console.WriteLine("|" + testV.ComplexVector[0].ToString() + "|");
+            Console.WriteLine("|" + testV.ComplexVector[1].ToString() + "|");
+
+
+
             Console.WriteLine("-----------------------------------------");
             Kubit X = Kubit.One.gateX();
             Console.WriteLine("Bramka X " + X.ToString());

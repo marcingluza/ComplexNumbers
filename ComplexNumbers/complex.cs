@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ComplexNumbers
+namespace AlgorytmyGenetyczne
 {
     class Complex
     {
@@ -67,6 +67,12 @@ namespace ComplexNumbers
         public Complex Conjugate() //sprezenie zespolone
         {
             return new Complex(R, -Im);
+        }
+
+        public double Induction()//indukcja
+        {
+            double temp = Math.Sqrt(Math.Pow(R, 2) + Math.Pow(Im, 2));
+            return temp;
         }
 
         public static bool operator ==(Complex c1, Complex c2)

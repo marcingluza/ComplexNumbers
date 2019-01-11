@@ -3,32 +3,22 @@ using System.Diagnostics;
 using System.Linq;
 
 
-namespace ComplexNumbers
+namespace AlgorytmyGenetyczne
 {
     class Qubit
     {
         
-        public Complex Alpha; // Alpha (α = |0>)
-        public Complex Beta; // Beta (β = |1>) 
+        public Complex Alpha; // Alpha |0>
+        public Complex Beta; // Beta  |1>
 
         public Qubit(Complex alpha, Complex beta)
         {
-            Debug.Assert(Math.Pow(alpha.Abs(), 2) + Math.Pow(beta.Abs(), 2) - 1 < 0.000001);
             this.Alpha = alpha;
             this.Beta = beta;
         }
 
         public static readonly Qubit One = new Qubit(Complex.Zero, Complex.One);    // |1>
         public static readonly Qubit Zero = new Qubit(Complex.One, Complex.Zero);   // |0>
-
-
-        public Qubit Not()
-        {
-            return new Qubit(Beta, Alpha);
-            // [ 0 1 ] [ alpha ]
-            // [ 1 0 ] [ beta  ]
-        }
-
 
         public Qubit gateH()
         {
@@ -58,12 +48,12 @@ namespace ComplexNumbers
             // [ 0 -1 ]
         }
 
-        /// <summary>
+
         //CNOT gate
-        /// [ 1 0 0 0 ]
-        /// [ 0 1 0 0 ]
-        /// [ 0 0 0 1 ]
-        /// [ 0 0 1 0 ]
+        // [ 1 0 0 0 ]
+        // [ 0 1 0 0 ]
+        // [ 0 0 0 1 ]
+        // [ 0 0 1 0 ]
 
         public static Qubit gateCONT(Qubit q1, Qubit q2) 
         {

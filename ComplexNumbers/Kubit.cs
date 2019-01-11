@@ -3,47 +3,47 @@ using System.Diagnostics;
 using System.Linq;
 
 
-namespace AlgorytmyGenetyczne
+namespace AlgorytmyKwantowe
 {
-    class Qubit
+    class Kubit
     {
         
-        public Complex Alpha; // Alpha |0>
-        public Complex Beta; // Beta  |1>
+        public Zespolona Alpha; // Alpha |0>
+        public Zespolona Beta; // Beta  |1>
 
-        public Qubit(Complex alpha, Complex beta)
+        public Kubit(Zespolona alpha, Zespolona beta)
         {
             this.Alpha = alpha;
             this.Beta = beta;
         }
 
-        public static readonly Qubit One = new Qubit(Complex.Zero, Complex.One);    // |1>
-        public static readonly Qubit Zero = new Qubit(Complex.One, Complex.Zero);   // |0>
+        public static readonly Kubit One = new Kubit(Zespolona.Zero, Zespolona.One);    // |1>
+        public static readonly Kubit Zero = new Kubit(Zespolona.One, Zespolona.Zero);   // |0>
 
-        public Qubit gateH()
+        public Kubit gateH()
         {
-            return new Qubit((Alpha + Beta) / Math.Sqrt(2), (Alpha - Beta) / Math.Sqrt(2));
+            return new Kubit((Alpha + Beta) / Math.Sqrt(2), (Alpha - Beta) / Math.Sqrt(2));
             //    1    [ 1  1 ]
             // sqrt(2) [ 1 -1 ]
         }
 
-        public Qubit gateX()
+        public Kubit gateX()
         {
-            return new Qubit(Beta, Alpha);
+            return new Kubit(Beta, Alpha);
             // [ 0  1 ]
             // [ 1  0 ]
         }
 
-        public Qubit gateY()
+        public Kubit gateY()
         {
-            return new Qubit(Complex.I * Alpha, -Complex.I * Beta);
+            return new Kubit(Zespolona.I * Alpha, -Zespolona.I * Beta);
             // [ 0  -i ]
             // [ i   0 ]
         }
 
-        public Qubit gateZ()
+        public Kubit gateZ()
         {
-            return new Qubit(Alpha, -Beta);
+            return new Kubit(Alpha, -Beta);
             // [ 1  0 ]
             // [ 0 -1 ]
         }
@@ -55,30 +55,30 @@ namespace AlgorytmyGenetyczne
         // [ 0 0 0 1 ]
         // [ 0 0 1 0 ]
 
-        public static Qubit gateCONT(Qubit q1, Qubit q2) 
+        public static Kubit gateCONT(Kubit q1, Kubit q2) 
         {
-            Complex[] Tensor = IloczynTensor(q1, q2);
+            Zespolona[] Tensor = IloczynTensor(q1, q2);
 
-            Complex[] result = new Complex[4];
+            Zespolona[] result = new Zespolona[4];
 
             result[0] = Tensor[0];
             result[1] = Tensor[1];
             result[2] = Tensor[3];
             result[3] = Tensor[2];
 
-            if (q1.Alpha != Complex.Zero)
+            if (q1.Alpha != Zespolona.Zero)
             {
-                return new Qubit(result[0] / q1.Alpha, result[1] / q1.Alpha);
+                return new Kubit(result[0] / q1.Alpha, result[1] / q1.Alpha);
             }
             else
             {
-                return new Qubit(result[2] / q1.Beta, result[3] / q1.Beta);
+                return new Kubit(result[2] / q1.Beta, result[3] / q1.Beta);
             }
         }
 
-        private static Complex[] IloczynTensor(Qubit q1, Qubit q2)
+        private static Zespolona[] IloczynTensor(Kubit q1, Kubit q2)
         {
-            return new Complex[]
+            return new Zespolona[]
             {
                 q1.Alpha * q2.Alpha,
                 q1.Alpha * q2.Beta,
@@ -96,12 +96,12 @@ namespace AlgorytmyGenetyczne
             return a + "|0> + " + b + "|1>";
         }
 
-        public static bool operator ==(Qubit q1, Qubit q2)
+        public static bool operator ==(Kubit q1, Kubit q2)
         {
             return q1.Equals(q2);
         }
 
-        public static bool operator !=(Qubit q1, Qubit q2)
+        public static bool operator !=(Kubit q1, Kubit q2)
         {
             return !q1.Equals(q2);
         }

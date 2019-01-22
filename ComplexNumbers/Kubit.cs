@@ -22,29 +22,21 @@ namespace AlgorytmyKwantowe
         public Kubit gateH()
         {
             return new Kubit((Alpha + Beta) / Math.Sqrt(2), (Alpha - Beta) / Math.Sqrt(2));
-            //    1    [ 1  1 ]
-            // sqrt(2) [ 1 -1 ]
         }
 
         public Kubit gateX()
         {
             return new Kubit(Beta, Alpha);
-            // [ 0  1 ]
-            // [ 1  0 ]
         }
 
         public Kubit gateY()
         {
             return new Kubit(Zespolona.I * Alpha, -Zespolona.I * Beta);
-            // [ 0  -i ]
-            // [ i   0 ]
         }
 
         public Kubit gateZ()
         {
             return new Kubit(Alpha, -Beta);
-            // [ 1  0 ]
-            // [ 0 -1 ]
         }
 
 
@@ -56,7 +48,7 @@ namespace AlgorytmyKwantowe
 
         public static Kubit gateCONT(Kubit q1, Kubit q2) 
         {
-            Zespolona[] Tensor = IloczynTensor(q1, q2);
+            Zespolona[] Tensor = Rejestry(q1, q2);
 
             Zespolona[] result = new Zespolona[4];
 
@@ -75,7 +67,7 @@ namespace AlgorytmyKwantowe
             }
         }
 
-        private static Zespolona[] IloczynTensor(Kubit q1, Kubit q2)
+        private static Zespolona[] Rejestry(Kubit q1, Kubit q2)
         {
             return new Zespolona[]
             {

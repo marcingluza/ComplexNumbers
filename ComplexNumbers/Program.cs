@@ -10,6 +10,8 @@ namespace AlgorytmyKwantowe
             Zespolona c2 = new Zespolona(2, -4);
             Zespolona c3 = new Zespolona(3, 2);
             Zespolona c4 = new Zespolona(4, -1);
+            Zespolona c5 = new Zespolona(1 / Math.Sqrt(2), 0);
+            Zespolona c6 = new Zespolona(1 / Math.Sqrt(2), 0);
             Console.WriteLine("Zespolona c1: "+ c1.ToString());
             Console.WriteLine("Zespolona c2: "+ c2.ToString());
             Zespolona temp = c1 + c2;
@@ -73,7 +75,9 @@ namespace AlgorytmyKwantowe
             Kubit H = Kubit.One.gateH();
             Console.WriteLine("Bramka H " + H.ToString());
 
-           // Kubit fi = new Kubit(Zespolona.)
+            Kubit test = new Kubit(c5, c6).gateH();
+            Console.WriteLine("Bramka test " + test.ToString());
+
 
 
 
